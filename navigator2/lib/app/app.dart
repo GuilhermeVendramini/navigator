@@ -12,7 +12,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: Page1(), Vai dar
+      //home: Page1(), Vai dar erro
       initialRoute: '/',
       routes: {
         '/': (context) => Page1(),
