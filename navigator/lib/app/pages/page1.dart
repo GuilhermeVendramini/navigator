@@ -9,9 +9,33 @@ class Page1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (!Navigator.canPop(context)) return Future.value(false);
+        //if (!Navigator.canPop(context)) return Future.value(false);
+        bool exit = false;
 
-        return Future.value(true);
+        await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Deseja Sair?'),
+            actions: [
+              ElevatedButton(
+                child: Text('Sim'),
+                onPressed: () {
+                  exit = true;
+                  Navigator.of(context).pop();
+                },
+              ),
+              ElevatedButton(
+                  child: Text('Não'),
+                  onPressed: () => Navigator.of(context).pop()),
+            ],
+          ),
+        );
+
+        print(exit);
+
+        return exit;
+
+        //return Future.value(true);
       },
       child: Scaffold(
         appBar: AppBar(
