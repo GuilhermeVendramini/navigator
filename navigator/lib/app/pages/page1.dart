@@ -5,35 +5,39 @@ import 'package:navigator/app/pages/page2.dart';
 class Page1 extends StatelessWidget {
   const Page1({Key key}) : super(key: key);
 
+  Future<bool> _exitAppAlert(BuildContext context) async {
+    bool exit = false;
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Deseja Sair?'),
+        actions: [
+          ElevatedButton(
+            child: Text('Sim'),
+            onPressed: () {
+              exit = true;
+              Navigator.of(context).pop();
+            },
+          ),
+          ElevatedButton(
+            child: Text('Não'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+
+    return exit;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         //if (!Navigator.canPop(context)) return Future.value(false);
-        bool exit = false;
 
-        await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Deseja Sair?'),
-            actions: [
-              ElevatedButton(
-                child: Text('Sim'),
-                onPressed: () {
-                  exit = true;
-                  Navigator.of(context).pop();
-                },
-              ),
-              ElevatedButton(
-                  child: Text('Não'),
-                  onPressed: () => Navigator.of(context).pop()),
-            ],
-          ),
-        );
-
-        print(exit);
-
-        return exit;
+        return await _exitAppAlert(context);
 
         //return Future.value(true);
       },
